@@ -75,7 +75,8 @@ router.put('/addUser', checkAuth, (req, res) => {
     if (user) {
       const userId = user._id;
 
-      Group.find({ users: userId }).then(user => {
+      Group.find({$and: [{ _id: groupId }, {users: userId}]})
+        .then(user => {
 
         if (user && user.length > 0) {
           res.status(409).json({
